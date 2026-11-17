@@ -1,0 +1,35 @@
+{
+  "name": "peck-docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#theme/*": "./.vitepress/theme/*"
+  },
+  "scripts": {
+    "dev": "bun run types && bun --bun vitepress dev",
+    "build": "bun run types && bun --bun vitepress build",
+    "preview": "bun --bun vitepress preview",
+    "types": "bun .vitepress/scripts/types/index.ts",
+    "format": "bun --bun prettier --write .",
+    "format:check": "bun --bun prettier --check ."
+  },
+  "devDependencies": {
+    "@needle-di/core": "1.2.1",
+    "@shikijs/vitepress-twoslash": "2.5.0",
+    "@types/bun": "1.3.2",
+    "pino": "10.4.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3",
+    "uql-orm": "0.104.1",
+    "vitepress": "1.6.4",
+    "vue": "3.5.13",
+    "vue-tsc": "3.1.4"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.2.6",
+    "@fontsource-variable/geist-mono": "5.2.6",
+    "@fontsource/pixelify-sans": "5.2.5",
+    "lucide-vue-next": "0.468.0"
+  }
+}
