@@ -33,25 +33,27 @@ Settings go in `.env.local`. Start from `.env.example`, which has every variable
 
 ## Cluster
 
-| Variable        | Default     | What it does                        |
-| --------------- | ----------- | ----------------------------------- |
-| `NODE_ID`       |             | Fixed node id, or empty to pick one |
-| `NODE_NAME`     |             | Name shown in the server list       |
-| `PUBLIC_HOST`   | `127.0.0.1` | Host the client connects to         |
-| `PUBLIC_PORT`   | `443`       | Port the client connects to         |
-| `NODE_CAPACITY` | `5000`      | Players the node takes              |
+| Variable        | Default        | What it does                        |
+| --------------- | -------------- | ----------------------------------- |
+| `NODE_ID`       |                | Fixed node id, or empty to pick one |
+| `NODE_NAME`     |                | Name shown in the server list       |
+| `PUBLIC_HOST`   | `127.0.0.1`    | Host the client connects to         |
+| `PUBLIC_PORT`   | Same as `PORT` | Port the client connects to         |
+| `NODE_CAPACITY` | `5000`         | Players the node takes              |
 
 Players can only move between nodes if they all use the same `PUBLIC_PORT` and each one has its own `PUBLIC_HOST`.
 
 ## API
 
-| Variable              | Default | What it does                   |
-| --------------------- | ------- | ------------------------------ |
-| `API_PORT`            | `3000`  | Port the API listens on        |
-| `API_URL`             |         | Public address of the API      |
-| `API_ORIGINS`         |         | Sites allowed to call the API  |
-| `GAME_DEPLOY_VERSION` | `1829`  | Client build to load           |
-| `GAME_BUILD_VERSION`  |         | Cache key for the client files |
+`/play` won't start a game until `CONTENT_URL`, `GAME_DEPLOY_VERSION` and `GAME_BUILD_VERSION` are all set.
+
+| Variable              | Default | What it does                      |
+| --------------------- | ------- | --------------------------------- |
+| `API_PORT`            | `3000`  | Port the API listens on           |
+| `API_URL`             |         | Public address of the API         |
+| `API_ORIGINS`         |         | Sites allowed to call the API     |
+| `GAME_DEPLOY_VERSION` |         | Client build to load, like `1829` |
+| `GAME_BUILD_VERSION`  |         | Build number sent to the client   |
 
 ## Masterpieces
 

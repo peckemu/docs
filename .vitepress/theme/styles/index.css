@@ -66,3 +66,21 @@
 .VPNavBar .divider:has(+ .VPNavBarAppearance) {
   display: none !important;
 }
+
+.vp-doc table,
+.vp-doc div[class*='language-'] pre {
+  scrollbar-width: thin;
+  scrollbar-color: #3a4642 transparent;
+}
+
+.vp-doc table {
+  padding-bottom: 6px;
+}
+
+.vp-doc table:hover {
+  scrollbar-color: #56645f transparent;
+}
+
+.vp-doc td:last-child {
+  min-width: 200px;
+}

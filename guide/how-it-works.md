@@ -1,5 +1,7 @@
 # How it works
 
+Peck is made of a few parts. Here's what each one does.
+
 ## Parts
 
 | Part       | What it does                              |

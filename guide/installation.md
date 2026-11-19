@@ -27,7 +27,7 @@ bun peck content:import
 bun run db:seed
 ```
 
-`content:import` needs the content settings filled in. Peck doesn't come with any game content, so you'll have to sort that part out yourself. See [Content](./content).
+`content:import` needs the content settings filled in. Peck doesn't come with any game content. You'll have to sort that bit out yourself. See [Content](./content).
 
 ## Run it
 

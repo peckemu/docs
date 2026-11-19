@@ -10,7 +10,7 @@ Peck has no game data in it. The importer downloads it and `db:seed` loads it in
 | `CONTENT_URL`           | Where the game files are               |
 | `CONTENT_HASH_PREFIX`   | The key the file names are hashed with |
 
-File names on the content server are hashed, so with the wrong key nothing is found.
+File names on the content server are hashed. With the wrong key, nothing will be found.
 
 ## Importing
 
@@ -38,7 +38,7 @@ It also makes an owner account, `sxip` with the password `peck123`. Change the p
 
 ## Minigames and shop stock
 
-These aren't in the content, the game server sends them. `catalogue:import` reads them from a packet log.
+These aren't in the content. The game server sends them. `catalogue:import` reads them from a packet log.
 
 ```sh
 bun peck catalogue:import --from packets.log
@@ -48,7 +48,7 @@ It writes `minigames.json` and `list-contents.json`. Seed again after. Without t
 
 ## Updating
 
-When the game updates, import and seed again. Existing data is updated, not wiped. Set `GAME_DEPLOY_VERSION` to the client's build.
+When the game updates, import and seed again. Existing rows are updated and nothing is wiped. Set `GAME_DEPLOY_VERSION` to the client's build.
 
 ## Errors
 

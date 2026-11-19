@@ -16,7 +16,7 @@ Peck is an open source Animal Jam Classic emulator written in TypeScript with Bu
 
 ## What doesn't
 
-- There's no chat filter, so write one before letting real people on.
+- There's no chat filter. Write one before you let real people on.
 - Adventures aren't done.
 - No game files are included. You'll need your own content.
 
@@ -35,3 +35,9 @@ Peck is an open source Animal Jam Classic emulator written in TypeScript with Bu
 | `packages/plugins`  | The handler and command API plugins build on   |
 
 It's built for client build `1829`.
+
+## Where next
+
+- [How it works](./how-it-works) and [Installation](./installation) to get it running
+- [Plugins](/plugins/introduction) to add your own features
+- [Project layout](/development/layout) to work on Peck itself
