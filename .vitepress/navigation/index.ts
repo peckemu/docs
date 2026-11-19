@@ -31,6 +31,8 @@ export const SIDEBAR: DefaultTheme.Sidebar = [
       { text: 'Clustering', link: '/guide/clustering' },
       { text: 'Permissions', link: '/guide/permissions' },
       { text: 'Moderation', link: '/guide/moderation' },
+      { text: 'Adventures', link: '/guide/adventures' },
+      { text: 'Rewards', link: '/guide/rewards' },
       { text: 'Console', link: '/guide/console' },
     ],
   },

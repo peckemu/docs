@@ -92,7 +92,7 @@ Runs Peck's and every plugin's seeds.
 
 `--only` takes seed names separated by commas. An unknown name stops it. With `NODE_ENV=production` only the seeds marked for production run, which leaves out `accounts`.
 
-Peck's seeds are `avatars`, `rooms`, `parties`, `items`, `diamonds`, `permissions`, `den-rooms`, `minigames`, `achievements`, `pets`, `roles`, `accounts`, `den-items`, `schedule`, `list-contents`, `exchanges` and `lists`.
+Peck's seeds are `avatars`, `rooms`, `parties`, `items`, `diamonds`, `permissions`, `den-rooms`, `minigames`, `achievements`, `pets`, `roles`, `accounts`, `den-items`, `schedule`, `list-contents`, `exchanges`, `world-items` and `lists`.
 
 ```sh
 bun peck database:seed --only items,den-items
@@ -146,6 +146,110 @@ Takes things out of a shop.
 
 ```sh
 bun peck shop:unstock --list 1234 --items 101
+```
+
+## `broadcast`
+
+Shows a message to every player on every node.
+
+| Option    | Env         | Default | Flag |
+| --------- | ----------- | ------- | ---- |
+| `--redis` | `REDIS_URL` | Asks    |      |
+| `--text`  |             | Asks    |      |
+| `--quiet` |             |         | Yes  |
+
+The message can't have `%` or `|` in it. Without `--quiet` it shows as a system message, and with it as a plain broadcast.
+
+```sh
+bun peck broadcast --text "The server restarts in five minutes"
+```
+
+## `party:end`
+
+Ends a player's hosted party before its time is up.
+
+| Option       | Env            | Default | Flag |
+| ------------ | -------------- | ------- | ---- |
+| `--database` | `DATABASE_URL` | Asks    |      |
+| `--redis`    | `REDIS_URL`    | Asks    |      |
+| `--player`   |                | Asks    |      |
+
+`--player` is the host's username. Their diamonds are given back and everyone at the party is moved out. It fails with `No such player` if the name isn't found.
+
+```sh
+bun peck party:end --player sxip
+```
+
+## `code:create`
+
+Makes a gift code.
+
+| Option       | Env            | Default   | Flag |
+| ------------ | -------------- | --------- | ---- |
+| `--database` | `DATABASE_URL` | Asks      |      |
+| `--code`     |                | Asks      |      |
+| `--gems`     |                | None      |      |
+| `--diamonds` |                | None      |      |
+| `--days`     |                | None      |      |
+| `--clothing` |                | None      |      |
+| `--denitems` |                | None      |      |
+| `--uses`     |                | Unlimited |      |
+| `--expires`  |                | Never     |      |
+| `--verified` |                |           | Yes  |
+
+`--clothing` is `defId:color` pairs and `--denitems` is definition ids, both separated by commas. `--days` is membership days. `--expires` is a date. `--verified` makes it need a confirmed email. It fails with `Code already exists` if the code is taken.
+
+```sh
+bun peck code:create --code WELCOME --gems 500 --clothing 1234:0
+```
+
+## `code:list`
+
+Lists the gift codes, with what each gives, how many times it's been used and when it expires.
+
+| Option       | Env            | Default | Flag |
+| ------------ | -------------- | ------- | ---- |
+| `--database` | `DATABASE_URL` | Asks    |      |
+
+```sh
+bun peck code:list
+```
+
+## `eco:gift`
+
+Adds or changes an eco gift.
+
+| Option       | Env            | Default | Flag |
+| ------------ | -------------- | ------- | ---- |
+| `--database` | `DATABASE_URL` | Asks    |      |
+| `--bit`      |                | Asks    |      |
+| `--score`    |                | Asks    |      |
+| `--item`     |                | Asks    |      |
+| `--color`    |                | None    |      |
+| `--name`     |                | None    |      |
+| `--desc`     |                | None    |      |
+
+`--bit` is the gift's place in the order, from `0` to `30`. `--score` is the eco score it needs and `--item` the den item it gives. `--name` and `--desc` are string ids. A bit that's already set up is changed.
+
+```sh
+bun peck eco:gift --bit 0 --score 100 --item 4541
+```
+
+## `referral:level`
+
+Sets up one of the four referral treasures.
+
+| Option        | Env            | Default | Flag |
+| ------------- | -------------- | ------- | ---- |
+| `--database`  | `DATABASE_URL` | Asks    |      |
+| `--level`     |                | Asks    |      |
+| `--referrals` |                | Asks    |      |
+| `--code`      |                | None    |      |
+
+`--level` is the treasure, from `1` to `4`. `--referrals` is how many it takes. `--code` is the gift code whose rewards it gives.
+
+```sh
+bun peck referral:level --level 1 --referrals 3 --code REFER1
 ```
 
 ## `plugins:list`

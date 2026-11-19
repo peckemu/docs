@@ -357,14 +357,30 @@ A post is cut to 70 characters. Muted players can't post, and nobody can post mo
 
 ## Moderation
 
-| Method   | Path                        | Auth | Permission         | Returns                         |
-| -------- | --------------------------- | ---- | ------------------ | ------------------------------- |
-| `GET`    | `/moderation/reports`       | Yes  | `players.moderate` | `{ data }` of open reports      |
-| `PUT`    | `/moderation/reports/:id`   | Yes  | `players.moderate` | `204`, resolves it              |
-| `GET`    | `/moderation/sanctions`     | Yes  | `players.moderate` | `{ data }` of running sanctions |
-| `DELETE` | `/moderation/sanctions/:id` | Yes  | `players.moderate` | `204`, lifts it                 |
+| Method   | Path                          | Auth | Permission         | Returns                         |
+| -------- | ----------------------------- | ---- | ------------------ | ------------------------------- |
+| `GET`    | `/moderation/reports`         | Yes  | `players.moderate` | `{ data }` of open reports      |
+| `PUT`    | `/moderation/reports/:id`     | Yes  | `players.moderate` | `204`, resolves it              |
+| `GET`    | `/moderation/sanctions`       | Yes  | `players.moderate` | `{ data }` of running sanctions |
+| `DELETE` | `/moderation/sanctions/:id`   | Yes  | `players.moderate` | `204`, lifts it                 |
+| `POST`   | `/moderation/broadcast`       | Yes  | `server.manage`    | `202`, sends it                 |
+| `DELETE` | `/moderation/parties/:gameId` | Yes  | `players.moderate` | `202`, ends it                  |
+| `PUT`    | `/moderation/jamagrams/:id`   | Yes  | `players.moderate` | `204`, changes its message      |
 
-`:id` is a UUID. A report that isn't open, or a sanction that isn't running, gets `404`.
+`:id` is a UUID for reports and sanctions, and a whole number for Jam-a-Grams. `:gameId` is the host's game id. A report that isn't open, a sanction that isn't running, or a host that doesn't exist gets `404`.
+
+### Broadcast body
+
+| Field    | What it is                                              |
+| -------- | ------------------------------------------------------- |
+| `text`   | Up to 256 characters, with no `%` or `\|`               |
+| `system` | Whether it shows as a system message, `true` by default |
+
+### Redact body
+
+| Field     | What it is                                         |
+| --------- | -------------------------------------------------- |
+| `message` | Up to 256 characters with no `%`, empty by default |
 
 ### Report
 

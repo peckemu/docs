@@ -24,7 +24,7 @@ Add `--save` to write the settings you pass to `.env.local`.
 bun peck content:import --flashvars <url> --content <url> --key <key> --save
 ```
 
-The files go in `packages/database/content`, which git ignores. There's one each for rooms, items, avatars, den items, den rooms, pets, diamonds, exchanges, parties, achievements and shop lists.
+The files go in `packages/database/content`, which git ignores. There's one each for rooms, items, avatars, den items, den rooms, pets, diamonds, exchanges, world items, parties, achievements and shop lists.
 
 ## Seeding
 
@@ -32,7 +32,7 @@ The files go in `packages/database/content`, which git ignores. There's one each
 bun run db:seed
 ```
 
-It stops if a file is missing, except `exchanges.json`.
+It stops if a file is missing, except `exchanges.json` and `world-items.json`.
 
 It also makes an owner account, `sxip` with the password `peck123`. Change the password. Seeding again won't reset it.
 
@@ -45,6 +45,12 @@ bun peck catalogue:import --from packets.log
 ```
 
 It writes `minigames.json` and `list-contents.json`. Seed again after. Without them there are no minigames and the shops are empty.
+
+## World items
+
+World items are the gifts left around the rooms. They come from `world-items.json`, and the list of which ones are out comes from the same pack. An item only shows while the import time is inside its dates. Import again to change what's out.
+
+A world item gives gems, diamonds, clothing or a den item. Each player can take each one once.
 
 ## Updating
 

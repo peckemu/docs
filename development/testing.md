@@ -182,3 +182,9 @@ expect(sent).toEqual(['%xt%grt%-1%Hello%'])
 | `bun run format:check` | `bun --bun prettier --check .` |
 
 `tsc -b` builds every project in the root `tsconfig.json`, including `tests`. ESLint uses the strict type checked rules from `typescript-eslint` and skips `apps/website` and `packages/ui`.
+
+## CI
+
+`.github/workflows/check.yml` runs on every push to `main` and every pull request. It checks types, lint and formatting. The tests aren't in the repo, so it can't run them. Run them yourself before you push.
+
+The type check leaves out the `tests` project for the same reason.

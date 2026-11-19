@@ -39,6 +39,28 @@ bun peck database:seed --only accounts
 
 It needs the `roles` seed to have run first, or it stops with `Role owner is not seeded`.
 
+Gift codes, eco gifts and referral treasures start empty. [Rewards](./rewards) shows how to set them up. Adventures have to be added by hand as well. See [Adventures](./adventures).
+
+## Docker
+
+The emulator and the API each have a Dockerfile. Build them from the project root.
+
+```sh
+docker build -f apps/emulator/Dockerfile -t peck-emulator .
+docker build -f apps/api/Dockerfile -t peck-api .
+```
+
+Each image installs only that app's dependencies and runs it with `NODE_ENV=production`. They don't read `.env` or `.env.local`. Pass the settings in as environment variables.
+
+```sh
+docker run --env-file .env.local -p 443:443 peck-emulator
+docker run --env-file .env.local -p 3000:3000 peck-api
+```
+
+Inside a container `localhost` is the container itself. Point `DATABASE_URL` and `REDIS_URL` at hosts it can reach.
+
+The images don't run migrations or seeds. Run `bun run db:migrate` from a checkout before you start a new version. `docker-compose.yml` only starts PostgreSQL and Redis for local use.
+
 ## Updating
 
 ```sh

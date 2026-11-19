@@ -11,13 +11,16 @@ Peck is an open source Animal Jam Classic emulator written in TypeScript with Bu
 - Pets, parties, minigames and PvP
 - Masterpieces, the Jammer Wall and AJHQ cards
 - Achievements and the daily spin
+- Adventures
+- Referrals, gift codes, eco gifts and world item gifts
 - Reports, bans, mutes and kicks
+- Staff broadcasts and ending parties early
 - Clustering and plugins
 
 ## What doesn't
 
 - There's no chat filter. Write one before you let real people on.
-- Adventures aren't done.
+- Adventures have no scripts. See [Adventures](./adventures).
 - No game files are included. You'll need your own content.
 
 ## Where things are

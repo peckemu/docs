@@ -141,22 +141,27 @@ Buddy lists, buddy counts in the selector and finding a buddy all read presence.
 
 Nodes talk over the Redis channel `peck:events`. Every node gets every event and acts on the players it has.
 
-| Event                 | Sent by                  | What it does                            |
-| --------------------- | ------------------------ | --------------------------------------- |
-| `buddy-request`       | Emulator                 | Shows a buddy request                   |
-| `buddy-added`         | Emulator                 | Adds a buddy                            |
-| `buddy-declined`      | Emulator                 | Tells the asker no                      |
-| `buddy-removed`       | Emulator                 | Removes a buddy                         |
-| `buddy-status`        | Emulator                 | A buddy came online or went offline     |
-| `block`               | Emulator                 | A player blocked or unblocked someone   |
-| `player-renamed`      | `bun peck player:rename` | Renames a buddy and logs the player out |
-| `masterpiece-decided` | API                      | Tells the painter it was reviewed       |
-| `jamagram-sent`       | Emulator, API            | A Jam-a-Gram arrived                    |
-| `jamagram-gift`       | Emulator                 | A gift came back                        |
-| `player-banned`       | Emulator                 | Tells the player and closes them        |
-| `player-muted`        | Emulator, API            | Mutes the player                        |
-| `player-unmuted`      | Emulator, API            | Lifts the mute                          |
-| `player-kicked`       | Emulator                 | Closes the player                       |
+| Event                 | Sent by                   | What it does                            |
+| --------------------- | ------------------------- | --------------------------------------- |
+| `buddy-request`       | Emulator                  | Shows a buddy request                   |
+| `buddy-added`         | Emulator                  | Adds a buddy                            |
+| `buddy-declined`      | Emulator                  | Tells the asker no                      |
+| `buddy-removed`       | Emulator                  | Removes a buddy                         |
+| `buddy-status`        | Emulator                  | A buddy came online or went offline     |
+| `block`               | Emulator                  | A player blocked or unblocked someone   |
+| `player-renamed`      | `bun peck player:rename`  | Renames a buddy and logs the player out |
+| `masterpiece-decided` | API                       | Tells the painter it was reviewed       |
+| `jamagram-sent`       | Emulator, API             | A Jam-a-Gram arrived                    |
+| `jamagram-gift`       | Emulator                  | A gift came back                        |
+| `jamagram-updated`    | API                       | A Jam-a-Gram's message changed          |
+| `den-visitor`         | Emulator                  | Tells a den's owner who came or left    |
+| `staff-broadcast`     | API, `bun peck broadcast` | Shows a message to every player         |
+| `party-ended`         | API, `bun peck party:end` | Ends a hosted party on its node         |
+| `party-refunded`      | Emulator                  | Gives the host their diamonds back      |
+| `player-banned`       | Emulator                  | Tells the player and closes them        |
+| `player-muted`        | Emulator, API             | Mutes the player                        |
+| `player-unmuted`      | Emulator, API             | Lifts the mute                          |
+| `player-kicked`       | Emulator                  | Closes the player                       |
 
 ## Draining
 

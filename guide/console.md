@@ -25,11 +25,24 @@ bun peck <command> [options]
 
 ## Game
 
-| Command         | What it does                |
-| --------------- | --------------------------- |
-| `player:rename` | Changes a player's username |
-| `shop:stock`    | Puts things in a shop       |
-| `shop:unstock`  | Takes things out of a shop  |
+| Command         | What it does                    |
+| --------------- | ------------------------------- |
+| `player:rename` | Changes a player's username     |
+| `shop:stock`    | Puts things in a shop           |
+| `shop:unstock`  | Takes things out of a shop      |
+| `broadcast`     | Shows a message to every player |
+| `party:end`     | Ends a player's hosted party    |
+
+## Rewards
+
+| Command          | What it does                |
+| ---------------- | --------------------------- |
+| `code:create`    | Makes a gift code           |
+| `code:list`      | Lists the gift codes        |
+| `eco:gift`       | Adds or changes an eco gift |
+| `referral:level` | Sets up a referral treasure |
+
+See [Rewards](./rewards) for how to set them up.
 
 ## Plugins
 

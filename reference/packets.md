@@ -50,6 +50,9 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 | `rj`   | `RoomJoin`         | Whether the player joined a room             |
 | `rm`   | `ShardList`        | The shards on each node                      |
 | `rp`   | `RoomProperties`   | What room to load                            |
+| `rl`   | `RoomList`         | The rooms the client knows                   |
+
+`RoomList` is never sent. The client keeps its own list of rooms as it joins them.
 
 ## Chat
 
@@ -61,9 +64,10 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 
 ### Outgoing
 
-| Header | Packet     | Format | What it says              |
-| ------ | ---------- | ------ | ------------------------- |
-| `uc`   | `RoomChat` | `xt`   | Someone in the room spoke |
+| Header | Packet         | Format                    | What it says              |
+| ------ | -------------- | ------------------------- | ------------------------- |
+| `uc`   | `RoomChat`     | `xt`                      | Someone in the room spoke |
+| `ua`   | `AdminMessage` | A message from Animal Jam |
 
 ## Avatar
 
@@ -138,13 +142,14 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 
 ### Outgoing
 
-| Header | Packet          | What it says                 |
-| ------ | --------------- | ---------------------------- |
-| `ib`   | `ItemBuy`       | Whether clothing was bought  |
-| `id`   | `DiamondBundle` | Whether a bundle was bought  |
-| `il`   | `ItemList`      | An avatar's items            |
-| `ir`   | `ItemRecycle`   | The recycled clothing        |
-| `iu`   | `ItemUse`       | Whether the clothing changed |
+| Header | Packet          | What it says                  |
+| ------ | --------------- | ----------------------------- |
+| `ib`   | `ItemBuy`       | Whether clothing was bought   |
+| `id`   | `DiamondBundle` | Whether a bundle was bought   |
+| `il`   | `ItemList`      | An avatar's items             |
+| `ir`   | `ItemRecycle`   | The recycled clothing         |
+| `iu`   | `ItemUse`       | Whether the clothing changed  |
+| `ip`   | `ItemPrize`     | A prize to keep or throw away |
 
 ## Currency
 
@@ -154,14 +159,17 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 | ------ | ------------------ | ---------------------------------- |
 | `cd`   | `GemDonation`      | Donates gems                       |
 | `ce`   | `CurrencyExchange` | Exchanges one currency for another |
+| `grc`  | `RedeemCode`       | Redeems a code                     |
 
 ### Outgoing
 
-| Header | Packet             | What it says               |
-| ------ | ------------------ | -------------------------- |
-| `cd`   | `GemDonation`      | Whether a donation worked  |
-| `ce`   | `CurrencyExchange` | Whether an exchange worked |
-| `cu`   | `Currency`         | A balance changed          |
+| Header | Packet               | What it says                 |
+| ------ | -------------------- | ---------------------------- |
+| `cd`   | `GemDonation`        | Whether a donation worked    |
+| `ce`   | `CurrencyExchange`   | Whether an exchange worked   |
+| `cu`   | `Currency`           | A balance changed            |
+| `grc`  | `RedeemCode`         | What a redeemed code came to |
+| `grm`  | `MembershipRedeemed` | A membership was redeemed    |
 
 ## Den
 
@@ -189,26 +197,27 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 
 ### Outgoing
 
-| Header | Packet           | What it says                              |
-| ------ | ---------------- | ----------------------------------------- |
-| `db`   | `DenBuy`         | Whether a den item or den room was bought |
-| `dc`   | `DenChange`      | The den room switched to                  |
-| `de`   | `DenEmpty`       | The den was emptied                       |
-| `dEc`  | `DenEcoConsumer` | The den's eco item switches               |
-| `dEf`  | `DenEcoState`    | The den's eco system                      |
-| `dEr`  | `DenEcoRedeem`   | Whether the eco credits were redeemed     |
-| `dh`   | `DenEpic`        | The epic dens                             |
-| `di`   | `DenItems`       | The player's den items                    |
-| `dl`   | `DenRooms`       | The player's den rooms                    |
-| `dp`   | `DenPrivacy`     | A player's den privacy                    |
-| `dph`  | `DenPhantom`     | A player turned into a phantom or back    |
-| `dpk`  | `DenKicked`      | The player was sent out of a den          |
-| `dr`   | `DenRecycle`     | The recycled den items or rooms           |
-| `ds`   | `DenState`       | The den's placed items                    |
-| `dsb`  | `DenShopBuy`     | Something bought from a den shop stand    |
-| `dsi`  | `DenShopItems`   | A stand's stock                           |
-| `dss`  | `DenStateSaved`  | Which den items were saved                |
-| `dsu`  | `DenShopUpdate`  | Whether a den shop stand changed          |
+| Header | Packet           | What it says                               |
+| ------ | ---------------- | ------------------------------------------ |
+| `db`   | `DenBuy`         | Whether a den item or den room was bought  |
+| `dc`   | `DenChange`      | The den room switched to                   |
+| `de`   | `DenEmpty`       | The den was emptied                        |
+| `dEc`  | `DenEcoConsumer` | The den's eco item switches                |
+| `dEf`  | `DenEcoState`    | The den's eco system                       |
+| `dEr`  | `DenEcoRedeem`   | Whether the eco credits were redeemed      |
+| `dh`   | `DenEpic`        | The epic dens                              |
+| `di`   | `DenItems`       | The player's den items                     |
+| `dl`   | `DenRooms`       | The player's den rooms                     |
+| `dp`   | `DenPrivacy`     | A player's den privacy                     |
+| `dph`  | `DenPhantom`     | A player turned into a phantom or back     |
+| `dpk`  | `DenKicked`      | The player was sent out of a den           |
+| `dr`   | `DenRecycle`     | The recycled den items or rooms            |
+| `ds`   | `DenState`       | The den's placed items                     |
+| `dsb`  | `DenShopBuy`     | Something bought from a den shop stand     |
+| `dsi`  | `DenShopItems`   | A stand's stock                            |
+| `dss`  | `DenStateSaved`  | Which den items were saved                 |
+| `dsu`  | `DenShopUpdate`  | Whether a den shop stand changed           |
+| `drc`  | `DenVisitors`    | Someone came into or left the player's den |
 
 ## Buddy
 
@@ -283,6 +292,7 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 | `ep`   | `JamagramPush`    | A Jam-a-Gram arrived               |
 | `er`   | `JamagramRead`    | Whether a Jam-a-Gram was opened    |
 | `es`   | `JamagramSend`    | Whether a Jam-a-Gram was sent      |
+| `eu`   | `JamagramUpdate`  | A Jam-a-Gram's message changed     |
 
 ## Wall
 
@@ -355,16 +365,17 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 
 ### Outgoing
 
-| Header | Packet            | What it says                       |
-| ------ | ----------------- | ---------------------------------- |
-| `scp`  | `PartyHost`       | Whether a party was hosted         |
-| `sj`   | `PartyJoin`       | Why a party was refused            |
-| `sjp`  | `HostedPartyJoin` | Whether a hosted party was joined  |
-| `sl`   | `PartyList`       | The parties on and coming          |
-| `slp`  | `HostedPartyList` | The parties players host           |
-| `sm`   | `Masterpieces`    | The masterpieces                   |
-| `sphp` | `HostingTime`     | How long a player has left hosting |
-| `spn`  | `HostedPartyNode` | A hosted party's server            |
+| Header | Packet              | What it says                        |
+| ------ | ------------------- | ----------------------------------- |
+| `scp`  | `PartyHost`         | Whether a party was hosted          |
+| `sj`   | `PartyJoin`         | Why a party was refused             |
+| `sjp`  | `HostedPartyJoin`   | Whether a hosted party was joined   |
+| `sl`   | `PartyList`         | The parties on and coming           |
+| `slp`  | `HostedPartyList`   | The parties players host            |
+| `sm`   | `Masterpieces`      | The masterpieces                    |
+| `sphp` | `HostingTime`       | How long a player has left hosting  |
+| `spn`  | `HostedPartyNode`   | A hosted party's server             |
+| `spk`  | `HostedPartyKilled` | The player's hosted party was ended |
 
 ## Pet
 
@@ -431,6 +442,151 @@ The packet name is the class name without `Incoming` or `Outgoing`.
 | `mp`   | `MinigamePvp`         | A two player game asked for or turned down |
 | `mr`   | `MinigameEmpty`       | A minigame's room is empty                 |
 | `ms`   | `MinigameStart`       | A minigame starts                          |
+
+## Adventure
+
+### Incoming
+
+| Header       | Packet              | What the handler does               |
+| ------------ | ------------------- | ----------------------------------- |
+| `qj`         | `QuestJoin`         | Joins or opens a public adventure   |
+| `qjc`        | `QuestCreate`       | Opens a private adventure           |
+| `qjp`        | `QuestJoinPrivate`  | Joins a private adventure           |
+| `qjf`        | `QuestJoinBuddy`    | Joins a buddy's adventure           |
+| `qjx`        | `QuestCancel`       | Leaves an adventure lobby           |
+| `qjk`        | `QuestKick`         | Kicks a player from a private lobby |
+| `qs`         | `QuestStart`        | Starts an adventure                 |
+| `qx`         | `QuestExit`         | Leaves an adventure                 |
+| `qat`        | `QuestTrigger`      | Sets off an actor                   |
+| `qatt`       | `QuestTreasure`     | Keeps or turns down a treasure      |
+| `qpup`       | `QuestPickUp`       | Picks up an item                    |
+| `qpgift`     | `QuestGift`         | Picks a gift                        |
+| `qpgiftplr`  | `QuestPlayerGift`   | Picks a gift of their own           |
+| `qpgiftdone` | `QuestGiftsDone`    | Finishes picking gifts              |
+| `qau`        | `QuestPosition`     | Says where an actor is              |
+| `qas`        | `QuestSeek`         | Asks an actor to seek               |
+| `qaut`       | `QuestUntrigger`    | Not handled yet                     |
+| `qaa`        | `QuestHit`          | Says something was hit              |
+| `qap`        | `QuestAttack`       | Says a phantom attacks a player     |
+| `qbzap`      | `QuestBeamZap`      | Says a beam caught the player       |
+| `qpzap`      | `QuestPhantomZap`   | Says a phantom caught the player    |
+| `qpad`       | `QuestDestructible` | Says a phantom hit a destructible   |
+| `qph`        | `QuestHeal`         | Says a heal landed                  |
+| `qp`         | `QuestThrow`        | Throws a weapon                     |
+| `qm`         | `QuestSwipe`        | Swings a weapon                     |
+| `qprr`       | `QuestRespawn`      | Asks to come back                   |
+| `qaskr`      | `QuestAnswer`       | Not handled yet                     |
+| `qmgc`       | `QuestMinigame`     | Not handled yet                     |
+| `qfrmgdone`  | `QuestRoomGame`     | Not handled yet                     |
+| `qcq`        | `QuestClone`        | Not handled yet                     |
+| `qmi`        | `QuestMovedItems`   | Asks where items were moved         |
+| `qdroppup`   | `QuestDrop`         | Drops an item                       |
+| `qps`        | `QuestPlant`        | Plants a seed                       |
+| `qep`        | `QuestEat`          | Says a plant bit a phantom          |
+| `qpa`        | `QuestPlantAte`     | Says a plant started eating         |
+| `qssau`      | `QuestScroll`       | Moves in a side scrolling adventure |
+| `qplayswf`   | `QuestFilm`         | Not handled yet                     |
+
+### Outgoing
+
+| Header        | Packet              | What it says                                 |
+| ------------- | ------------------- | -------------------------------------------- |
+| `qj`          | `QuestJoin`         | Whether a public adventure was joined        |
+| `qjc`         | `QuestCreate`       | Whether a private adventure was opened       |
+| `qjp`         | `QuestJoinPrivate`  | Whether a private adventure was joined       |
+| `qw`          | `QuestWaiting`      | Who waits in a lobby                         |
+| `qjx`         | `QuestCancel`       | A lobby was left                             |
+| `qs`          | `QuestStart`        | An adventure starts                          |
+| `qx`          | `QuestExit`         | An adventure was left                        |
+| `qxt`         | `QuestExitType`     | Sends a player out of an adventure           |
+| `qplq`        | `QuestPlayerLeft`   | A player left an adventure                   |
+| `qrc`         | `QuestRoomChange`   | A player went to another adventure room      |
+| `qqm`         | `QuestBundle`       | Several adventure messages                   |
+| `quxp`        | `QuestXp`           | Adventure experience earned                  |
+| `qulu`        | `QuestLevel`        | A player levelled up                         |
+| `qaward`      | `QuestAward`        | An adventure award                           |
+| `qatt`        | `QuestTreasure`     | A treasure's prize                           |
+| `qpgift`      | `QuestGifts`        | An adventure's gifts                         |
+| `qpgiftplr`   | `QuestPlayerGifts`  | A player's own gifts                         |
+| `qporbs`      | `QuestCrystals`     | The crystals gathered                        |
+| `qusu`        | `QuestStats`        | The player's attack and defence              |
+| `qseed`       | `QuestSeed`         | A seed count                                 |
+| `qspn`        | `QuestSpawn`        | An actor appears                             |
+| `qau`         | `QuestPosition`     | An actor moved                               |
+| `qas`         | `QuestSeek`         | An actor seeks                               |
+| `qahs`        | `QuestActorHealth`  | An actor was hit                             |
+| `qad`         | `QuestDeath`        | An actor was defeated                        |
+| `qrestore`    | `QuestRestore`      | An actor came back                           |
+| `qswfs`       | `QuestSwfState`     | An actor's animation changes                 |
+| `qsp`         | `QuestPath`         | An actor walks another path                  |
+| `qicon`       | `QuestIcon`         | An actor's icon shows or hides               |
+| `qmi`         | `QuestMovedItems`   | Where items were moved                       |
+| `qpup`        | `QuestPickUp`       | What a pick up came to                       |
+| `qgi`         | `QuestGiveItem`     | Hands a player an item                       |
+| `qavsw`       | `QuestAvatarSwitch` | A player is disguised                        |
+| `qviu`        | `QuestVolume`       | A volume's progress                          |
+| `qtorch`      | `QuestTorch`        | A torch is lit or put out                    |
+| `qap`         | `QuestAttack`       | An actor attacks a player                    |
+| `qbzap`       | `QuestBeamZap`      | A beam zaps                                  |
+| `qpzap`       | `QuestPhantomZap`   | A phantom zaps a player                      |
+| `qpd`         | `QuestDead`         | A player was defeated                        |
+| `qprr`        | `QuestRespawn`      | A player may come back                       |
+| `quhp`        | `QuestHealth`       | A player's health                            |
+| `qrspn`       | `QuestRespawned`    | A player came back                           |
+| `qp`          | `QuestThrow`        | A weapon was thrown                          |
+| `qm`          | `QuestSwipe`        | A weapon was swung                           |
+| `qps`         | `QuestPlant`        | A seed was planted                           |
+| `qpa`         | `QuestPlantAte`     | A plant ate a phantom                        |
+| `qepr`        | `QuestRecoil`       | A plant recoils                              |
+| `qssau`       | `QuestScroll`       | A player moved in a side scrolling adventure |
+| `qplayswf`    | `QuestFilm`         | Plays a film                                 |
+| `qpreloadswf` | `QuestPreload`      | Loads a film                                 |
+| `qfade`       | `QuestFade`         | Fades the screen                             |
+| `qshake`      | `QuestShake`        | Shakes the room                              |
+| `qsnd`        | `QuestSound`        | Plays a sound                                |
+| `qsndVO`      | `QuestVoiceOver`    | Plays a voice over                           |
+| `qmusic`      | `QuestMusic`        | Changes the music                            |
+| `qmlib`       | `QuestMediaLibrary` | Loads a sound pack                           |
+| `qsndpk`      | `QuestSoundPack`    | Loads a sound pack                           |
+| `qposturi`    | `QuestPostUri`      | Records a page view                          |
+
+These are built but nothing sends them yet, because they need an adventure script to say when: `qaward`, `qqm`, `qspn`, `qrestore`, `qswfs`, `qsp`, `qicon`, `qgi`, `qavsw`, `qviu`, `qtorch`, `qusu`, `qseed`, `qepr`, `qrc`, `qplayswf`, `qpreloadswf`, `qfade`, `qshake`, `qsnd`, `qsndVO`, `qsndpk`, `qposturi`.
+
+## Referral
+
+### Incoming
+
+| Header | Packet               | What the handler does                  |
+| ------ | -------------------- | -------------------------------------- |
+| `refc` | `ReferralCode`       | Asks for the referral code             |
+| `refh` | `ReferralAssociated` | Asks whether the player has a referrer |
+| `refa` | `ReferralAssociate`  | Names the player's referrer            |
+| `refr` | `ReferralList`       | Asks for the player's referrals        |
+
+### Outgoing
+
+| Header | Packet               | What it says                      |
+| ------ | -------------------- | --------------------------------- |
+| `refc` | `ReferralCode`       | The referral code                 |
+| `refh` | `ReferralAssociated` | Whether the player has a referrer |
+| `refa` | `ReferralAssociate`  | Whether the referrer was kept     |
+| `refr` | `ReferralList`       | The player's referrals            |
+
+## World
+
+### Incoming
+
+| Header | Packet          | What the handler does     |
+| ------ | --------------- | ------------------------- |
+| `nd`   | `NodeHop`       | Asks for another node     |
+| `wig`  | `WorldItemGift` | Takes a world item's gift |
+
+### Outgoing
+
+| Header | Packet          | What it says                          |
+| ------ | --------------- | ------------------------------------- |
+| `nd`   | `NodeHop`       | The node to move to                   |
+| `wig`  | `WorldItemGift` | Whether a world item's gift was given |
 
 ## Moderation
 

@@ -29,6 +29,16 @@ Mute and silence do the same thing. Silence keeps the reason the moderator picke
 
 Each tool can be used 10 times in 10 seconds. Invisible can be toggled 5 times in 5 seconds.
 
+These three are only on the API and the console.
+
+| Tool                   | What it does                                                 |
+| ---------------------- | ------------------------------------------------------------ |
+| Broadcast              | Shows a message to every player on every node                |
+| Ending a party         | Ends a hosted party early and gives the host's diamonds back |
+| Redacting a Jam-a-Gram | Changes a Jam-a-Gram's message, which updates in the inbox   |
+
+A Jam-a-Gram report only says who sent it. To redact the card, look up its id in `jamagrams`. An empty message also hides the card's report button.
+
 ## How long sanctions last
 
 From `packages/game/src/moderation/index.ts`.
@@ -110,29 +120,39 @@ Every toggle is written to the audit log.
 
 Moderation writes these rows to `audit_log`. They can be read with `GET /access/audit`, which needs `audit.read`.
 
-| Action             | Target           | Detail                                  |
-| ------------------ | ---------------- | --------------------------------------- |
-| `player.banned`    | Player           | Sanction id, reason, note, when it ends |
-| `player.muted`     | Player           | Sanction id, reason, note, when it ends |
-| `player.kicked`    | Player           | Note                                    |
-| `player.invisible` | The staff player | Whether they're now invisible           |
-| `sanction.lifted`  | Player           | Sanction id and kind                    |
-| `report.resolved`  | Report           |                                         |
+| Action              | Target           | Detail                                    |
+| ------------------- | ---------------- | ----------------------------------------- |
+| `player.banned`     | Player           | Sanction id, reason, note, when it ends   |
+| `player.muted`      | Player           | Sanction id, reason, note, when it ends   |
+| `player.kicked`     | Player           | Note                                      |
+| `player.invisible`  | The staff player | Whether they're now invisible             |
+| `sanction.lifted`   | Player           | Sanction id and kind                      |
+| `report.resolved`   | Report           |                                           |
+| `server.broadcast`  | Every server     | The message and whether it's a system one |
+| `party.ended`       | The host         |                                           |
+| `jamagram.redacted` | The sender       | The card's id, the old and new message    |
 
 ## API
 
-Every route needs `players.moderate` and a session token as `Authorization: Bearer <token>`. They're in `apps/api/src/modules/moderation/routes/index.ts`.
+Every route needs a session token as `Authorization: Bearer <token>`, and `players.moderate` unless it says otherwise. They're in `apps/api/src/modules/moderation/routes/index.ts`.
 
-| Route                              | What it does                                   |
-| ---------------------------------- | ---------------------------------------------- |
-| `GET /moderation/reports`          | Lists the open reports, oldest first           |
-| `PUT /moderation/reports/:id`      | Resolves a report                              |
-| `GET /moderation/sanctions`        | Lists the running bans and mutes, newest first |
-| `DELETE /moderation/sanctions/:id` | Lifts a ban or mute                            |
+| Route                                | What it does                                       |
+| ------------------------------------ | -------------------------------------------------- |
+| `GET /moderation/reports`            | Lists the open reports, oldest first               |
+| `PUT /moderation/reports/:id`        | Resolves a report                                  |
+| `GET /moderation/sanctions`          | Lists the running bans and mutes, newest first     |
+| `DELETE /moderation/sanctions/:id`   | Lifts a ban or mute                                |
+| `POST /moderation/broadcast`         | Shows a message to everyone. Needs `server.manage` |
+| `DELETE /moderation/parties/:gameId` | Ends a player's hosted party                       |
+| `PUT /moderation/jamagrams/:id`      | Changes a Jam-a-Gram's message                     |
 
 Resolving a report that isn't open answers `404` with `Report is not open`. Lifting a sanction that has ended or was already lifted answers `404` with `Sanction is not running`.
 
 Bans and mutes can only be given in the game. The API can only lift them.
+
+A broadcast takes `{ "text": "...", "system": true }`. The text can be up to 256 characters with no `%` or `|`. Ending a party answers `404` if the player isn't found. A redaction takes `{ "message": "..." }`, and leaving it out clears the message.
+
+The console's `broadcast` and `party:end` do the same as the API, but aren't written to the audit log.
 
 The lists come back as `{ "data": [...] }`. The views are in `apps/api/src/modules/moderation/views/index.ts`.
 
